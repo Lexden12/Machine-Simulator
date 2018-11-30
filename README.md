@@ -6,7 +6,7 @@ This project was made in Netbeans, so project files can be found in the "nbproje
 
 Otherwise, java source files are in "src/turing/machine" and example test files are in the "test" directory.
 
-This project is designed for Windows systems but should be easily recompiled for Linux systems.
+This project is designed for Windows systems but should be able to run on all systems running a Java VM.
 In order to easily input TMs into the program, use a spreadsheet processor such as Excel which allows easy management of csv files.
 
 # Known Issues
