@@ -20,7 +20,7 @@ public class TMCanvas extends Canvas{
     private TuringMachine TM;
     ArrayList<TMState> states;
     private final int STATE_SIZE = 100;
-    private final int RADIUS = 200;
+    private final int RADIUS = 350;
     private float scale;
     private TMState currentState;
     
@@ -51,18 +51,27 @@ public class TMCanvas extends Canvas{
                 int k = states.indexOf(state2);
                 int x2 = getStateX(k);
                 int y2 = getStateY(k);
+                int x3 = (int)((x2 - x + STATE_SIZE)/2.0) + x;
+                int y3 = (int)((y2 - y + STATE_SIZE)/2.0) + y;
                 int offSet = STATE_SIZE/2;
+                double theta = (i * Math.PI * 2)/states.size();
                 g.drawLine(x + offSet, y + offSet, x2 + offSet, y2 + offSet);
+                g.drawLine(x3, y3, x3 + (int)(30 * scale * Math.cos(theta - Math.PI/4)), y3 + (int)(30 * scale * Math.sin(theta - Math.PI/4)));
+                g.drawLine(x3, y3, x3 + (int)(30 * scale * Math.cos(theta + Math.PI/4)), y3 + (int)(30 * scale * Math.sin(theta + Math.PI/4)));
+                if(states.get(i).getTransitions().get(j).isRight())
+                    g.drawString(states.get(i).getTransitions().get(j).getChar()+" -> "+states.get(i).getTransitions().get(j).getWrite()+", R", x3, y3);
+                else
+                    g.drawString(states.get(i).getTransitions().get(j).getChar()+" -> "+states.get(i).getTransitions().get(j).getWrite()+", L", x3, y3);
             }
         }
     }
     
     private int getStateX(int i){
-        return (int)(RADIUS * scale * Math.cos((i * Math.PI * 2)/states.size())) + getWidth()/2 - (int)(RADIUS/2 * scale);
+        return (int)(RADIUS * scale * Math.cos((i * Math.PI * 2)/states.size())) + getWidth()*7/16;
     }
     
     private int getStateY(int i){
-        return (int)(RADIUS * scale * Math.sin((i * Math.PI * 2)/states.size())) + getHeight()/4 + (int)(3*STATE_SIZE/4 * scale);
+        return (int)(RADIUS * scale * Math.sin((i * Math.PI * 2)/states.size())) + getHeight()*7/16;
     }
     
     public TMState step(){
