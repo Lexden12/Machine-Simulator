@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TMState {
     private String name;
     private ArrayList<TMTransition> transitions;
+    int x, y;
     
     public TMState(String name){
         this.name = name;

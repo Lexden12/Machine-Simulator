@@ -64,7 +64,10 @@ public class Tape {
         }
         String s = "";
         while(start != null){
-            s = s.concat(start.getElement() + ", ");
+            if(start == head)
+                s = s.concat("|"+start.getElement() + "|, ");
+            else
+                s = s.concat(start.getElement() + ", ");
             start = start.getNext();
         }
         return s;

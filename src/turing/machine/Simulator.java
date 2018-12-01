@@ -6,7 +6,7 @@
 
 package turing.machine;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,16 +15,14 @@ import java.util.Scanner;
 public class Simulator {
     public static void main(String[] args) {
         String path = "C:\\Users\\alexi\\Documents\\NetBeansProjects\\Turing Machine\\test\\";
-        Scanner s = new Scanner(System.in);
-        System.out.print("Enter the path to the csv to the TM you wish to simulate(for the test files, just enter test1 etc.): ");
-        String line = s.nextLine();
+        String file = JOptionPane.showInputDialog("Enter the path to the csv to the TM you wish to simulate(for the test files, just enter test1 etc.):");
         TuringMachine TM;
-        if(line.contains("\\"))
-            TM = new TuringMachine(s.nextLine());
+        if(file.contains("\\"))
+            TM = new TuringMachine(file);
         else
-            TM = new TuringMachine(path+line+".csv");
-        System.out.print("Enter the string you wish to test: ");
-        TM.start(s.nextLine());
+            TM = new TuringMachine(path+file+".csv");
+        String in = JOptionPane.showInputDialog("Enter the string you wish to test:");
+        TM.start(in);
         TMGUI g = new TMGUI(TM);
     }
 }
