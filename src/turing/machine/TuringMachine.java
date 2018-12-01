@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class TuringMachine {
     private Tape tape;
     private ArrayList<TMState> states;
-    private int currentState;
-    private boolean accepted;
+    int currentState;
+    boolean accepted;
     
     public TuringMachine(String in){
         File f = new File(in);
@@ -70,6 +70,7 @@ public class TuringMachine {
     public void start(String in){
         tape = new Tape(in);
         currentState = 0;
+        accepted = false;
     }
     
     /**

@@ -12,6 +12,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -25,15 +26,27 @@ public class TMGUI extends JFrame{
     private TuringMachine TM;
     private JButton step;
     private JTextArea text;
+    private boolean ended;
     
     public TMGUI(TuringMachine TM){
         this.TM = TM;
         canvas = new TMCanvas(TM);
+        init();
+    }
+    
+    public TMGUI(TuringMachine TM, ArrayList<String> inputs){
+        this.TM = TM;
+        canvas = new TMCanvas(TM, inputs);
+        init();
+    }
+    
+    public void init(){
         step = new JButton("Step");
         step.addActionListener(new StepButtonListener());
         step.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,40));
         text = new JTextArea();
         text.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,(40)));
+        text.setEditable(false);
         setSize(1000,1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         text.setText(TM.getTape().toString());
@@ -63,11 +76,17 @@ public class TMGUI extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             TMState state = canvas.step();
+            if(ended){
+                text.setBackground(Color.white);
+                ended = false;
+            }
             if(state == TM.getStates().get(TM.getStates().size()-1)){
                 text.setBackground(Color.green);
+                ended = true;
             }
             else if(state == null){
                 text.setBackground(Color.red);
+                ended = true;
             }
             text.setText(TM.getTape().toString());
         }

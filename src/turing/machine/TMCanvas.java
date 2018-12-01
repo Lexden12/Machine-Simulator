@@ -26,7 +26,10 @@ public class TMCanvas extends Canvas{
     private float scale;
     private TMState currentState;
     private boolean isStart;
+    private boolean ended;
+    private boolean restart;
     private int clickedState = -1;
+    private ArrayList<String> strings;
     
     public TMCanvas(TuringMachine TM){
         this.TM = TM;
@@ -36,6 +39,18 @@ public class TMCanvas extends Canvas{
         this.setVisible(true);
         isStart = true;
         this.addMouseListener(new MouseEventListener());
+    }
+    
+    public TMCanvas(TuringMachine TM, ArrayList<String> inputs){
+        this.TM = TM;
+        states = TM.getStates();
+        currentState = states.get(0);
+        scale = 1f;
+        this.setVisible(true);
+        isStart = true;
+        this.addMouseListener(new MouseEventListener());
+        strings = inputs;
+        TM.start(strings.remove(0));
     }
 
     @Override
@@ -85,8 +100,22 @@ public class TMCanvas extends Canvas{
     }
     
     public TMState step(){
+        if(restart && !strings.isEmpty()){
+            TM.start(strings.remove(0));
+            restart = false;
+            currentState = TM.getStates().get(0);
+            repaint();
+            return currentState;
+        }
+        if(ended && !strings.isEmpty()){
+            ended = false;
+            restart = true;
+            return currentState;
+        }
         currentState = TM.step();
         repaint();
+        if(TM.accepted || TM.currentState == -1)
+            ended = true;
         return currentState;
     }
 
