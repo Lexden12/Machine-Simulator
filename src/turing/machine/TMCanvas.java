@@ -10,6 +10,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +25,8 @@ public class TMCanvas extends Canvas{
     private final int RADIUS = 350;
     private float scale;
     private TMState currentState;
+    private boolean isStart;
+    private int clickedState = -1;
     
     public TMCanvas(TuringMachine TM){
         this.TM = TM;
@@ -30,17 +34,26 @@ public class TMCanvas extends Canvas{
         currentState = states.get(0);
         scale = 1f;
         this.setVisible(true);
+        isStart = true;
+        this.addMouseListener(new MouseEventListener());
     }
 
     @Override
     public void paint(Graphics g) {
+        if(isStart){
+            for(int i = 0; i < states.size(); i++){
+                states.get(i).x = getStateX(i);
+                states.get(i).y = getStateY(i);
+            }
+            isStart = false;
+        }
         for(int i = 0; i < states.size(); i++){
             g.setColor(Color.YELLOW);
             if(currentState == states.get(i))
                 g.setColor(Color.GREEN);
             int x, y;
-            x = getStateX(i);
-            y = getStateY(i);
+            x = states.get(i).x;
+            y = states.get(i).y;
             int size = (int)(STATE_SIZE * scale);
             g.fillOval(x, y, size, size);
             g.setColor(Color.BLACK);
@@ -49,15 +62,12 @@ public class TMCanvas extends Canvas{
             for(int j = 0; j < states.get(i).getTransitions().size(); j++){
                 TMState state2 = states.get(i).getTransitions().get(j).getDest();
                 int k = states.indexOf(state2);
-                int x2 = getStateX(k);
-                int y2 = getStateY(k);
+                int x2 = states.get(k).x;
+                int y2 = states.get(k).y;
                 int x3 = (int)((x2 - x + STATE_SIZE)/2.0) + x;
                 int y3 = (int)((y2 - y + STATE_SIZE)/2.0) + y;
                 int offSet = STATE_SIZE/2;
-                double theta = (i * Math.PI * 2)/states.size();
                 g.drawLine(x + offSet, y + offSet, x2 + offSet, y2 + offSet);
-                g.drawLine(x3, y3, x3 + (int)(30 * scale * Math.cos(theta - Math.PI/4)), y3 + (int)(30 * scale * Math.sin(theta - Math.PI/4)));
-                g.drawLine(x3, y3, x3 + (int)(30 * scale * Math.cos(theta + Math.PI/4)), y3 + (int)(30 * scale * Math.sin(theta + Math.PI/4)));
                 if(states.get(i).getTransitions().get(j).isRight())
                     g.drawString(states.get(i).getTransitions().get(j).getChar()+" -> "+states.get(i).getTransitions().get(j).getWrite()+", R", x3, y3);
                 else
@@ -67,11 +77,11 @@ public class TMCanvas extends Canvas{
     }
     
     private int getStateX(int i){
-        return (int)(RADIUS * scale * Math.cos((i * Math.PI * 2)/states.size())) + getWidth()*7/16;
+        return (int)(RADIUS * scale * Math.cos((i * Math.PI * 2)/states.size())) + getWidth()/2;
     }
     
     private int getStateY(int i){
-        return (int)(RADIUS * scale * Math.sin((i * Math.PI * 2)/states.size())) + getHeight()*7/16;
+        return (int)(RADIUS * scale * Math.sin((i * Math.PI * 2)/states.size())) + getHeight()/2;
     }
     
     public TMState step(){
@@ -86,5 +96,47 @@ public class TMCanvas extends Canvas{
 
     public void setScale(float scale) {
         this.scale = scale;
+    }
+    
+    private class MouseEventListener implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            for(int i = 0; i < states.size(); i++){
+                int stateX = states.get(i).x;
+                int stateY = states.get(i).y;
+                int diffX = Math.abs(x - stateX);
+                int diffY = Math.abs(y - stateY);
+                if(diffX < 100 && diffY < 100){
+                    clickedState = i;
+                }
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if(clickedState != -1){
+                states.get(clickedState).x = e.getX();
+                states.get(clickedState).y = e.getY();
+            }
+            clickedState = -1;
+            repaint();
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
     }
 }
