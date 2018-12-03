@@ -18,12 +18,17 @@
 package turing.machine;
 
 /**
- *
+ * Tape for a Turing Machine. Uses a Doubly Linked List to store characters.
  * @author Alex "Lexden" Schendel
  */
 public class Tape {
+    //head of the tape
     private DoublyLinkedListElement<Character> head;
     
+    /**
+     * constructor for the tape
+     * @param in string to initialize the tape with
+     */
     public Tape(String in){
         char[] chars = in.toCharArray();
         head = new DoublyLinkedListElement<>(chars[0]);
@@ -37,10 +42,18 @@ public class Tape {
         
     }
 
+    /**
+     * getter for the head
+     * @return the head of the tape
+     */
     public DoublyLinkedListElement<Character> getHead() {
         return head;
     }
     
+    /**
+     * move the head left
+     * @return the character read
+     */
     public DoublyLinkedListElement<Character> moveLeft(){
         if(head.getPrevious() == null){
             DoublyLinkedListElement e = new DoublyLinkedListElement<>('_');
@@ -51,6 +64,10 @@ public class Tape {
         return head;
     }
     
+    /**
+     * move the head right
+     * @return the character read
+     */
     public DoublyLinkedListElement<Character> moveRight(){
         if(head.getNext() == null){
             DoublyLinkedListElement e = new DoublyLinkedListElement<>('_');
@@ -61,10 +78,18 @@ public class Tape {
         return head;
     }
     
+    /**
+     * rewrite the character at the head of the tape
+     * @param c 
+     */
     public void writeCharacter(char c){
         head.setElement(c);
     }
     
+    /**
+     * overridden toString to return the tape in human-readable format
+     * @return a string representing the tape
+     */
     @Override
     public String toString(){
         DoublyLinkedListElement<Character> start = head;

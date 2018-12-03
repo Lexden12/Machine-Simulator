@@ -26,7 +26,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
- *
+ * Canvas to draw the Turing Machine
  * @author Alex "Lexden" Schendel
  */
 public class TMCanvas extends Canvas{
@@ -42,6 +42,10 @@ public class TMCanvas extends Canvas{
     private int clickedState = -1;
     private ArrayList<String> strings;
     
+    /**
+     * constructor for the canvas with just the TM to draw
+     * @param TM Turing Machine to draw
+     */
     public TMCanvas(TuringMachine TM){
         this.TM = TM;
         states = TM.getStates();
@@ -52,6 +56,11 @@ public class TMCanvas extends Canvas{
         this.addMouseListener(new MouseEventListener());
     }
     
+    /**
+     * constructor with Turing Machine to draw and multiple input strings to run
+     * @param TM Turing Machine to draw
+     * @param inputs multiple inputs to run
+     */
     public TMCanvas(TuringMachine TM, ArrayList<String> inputs){
         this.TM = TM;
         states = TM.getStates();
@@ -64,6 +73,10 @@ public class TMCanvas extends Canvas{
         TM.start(strings.remove(0));
     }
 
+    /**
+     * draw the TM
+     * @param g Graphics to use to draw it
+     */
     @Override
     public void paint(Graphics g) {
         if(isStart){
@@ -102,6 +115,8 @@ public class TMCanvas extends Canvas{
         }
     }
     
+    //getters
+    
     private int getStateX(int i){
         return (int)(RADIUS * scale * Math.cos((i * Math.PI * 2)/states.size())) + getWidth()/2;
     }
@@ -110,6 +125,10 @@ public class TMCanvas extends Canvas{
         return (int)(RADIUS * scale * Math.sin((i * Math.PI * 2)/states.size())) + getHeight()*7/16;
     }
     
+    /**
+     * step through the Turing Machine and update the canvas
+     * @return the new state entered by the Turing Machine
+     */
     public TMState step(){
         if(restart && !strings.isEmpty()){
             TM.start(strings.remove(0));
@@ -130,6 +149,7 @@ public class TMCanvas extends Canvas{
         return currentState;
     }
 
+    //getter/setter for scale (not implemented)
     public float getScale() {
         return scale;
     }
@@ -138,6 +158,9 @@ public class TMCanvas extends Canvas{
         this.scale = scale;
     }
     
+    /**
+     * mouse listener to allow the user to click and drag states of the Turing Machine.
+     */
     private class MouseEventListener implements MouseListener{
 
         @Override

@@ -18,7 +18,7 @@
 package turing.machine;
 
 /**
- *
+ * transition of a Turing Machine
  * @author Alex "Lexden" Schendel
  */
 public class TMTransition extends Transition{
@@ -26,6 +26,13 @@ public class TMTransition extends Transition{
     private final boolean isRight;
     private final char write;
     
+    /**
+     * constructor for a transition
+     * @param c char to read
+     * @param terminal next state
+     * @param right true means move the head right. Left otherwise
+     * @param w char to write
+     */
     public TMTransition(char c, TMState terminal, boolean right, char w) {
         super(c);
         dest = terminal;
@@ -33,6 +40,8 @@ public class TMTransition extends Transition{
         write = w;
     }
 
+    //getters
+    
     public TMState getDest() {
         return dest;
     }

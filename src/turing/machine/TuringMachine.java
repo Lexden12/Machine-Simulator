@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
+ * a class to store a Turing Machine
  * @author Alex "Lexden" Schendel
  */
 public class TuringMachine {
@@ -31,6 +31,10 @@ public class TuringMachine {
     int currentState;
     boolean accepted;
     
+    /**
+     * constructor for a Turing Machine
+     * @param in string to a csv file with all requisite information to construct a Turing Machine
+     */
     public TuringMachine(String in){
         File f = new File(in);
         states = new ArrayList<>();
@@ -78,6 +82,10 @@ public class TuringMachine {
         }
     }
     
+    /**
+     * initialize the constructed Turing Machine to (re)start itself on a new input string
+     * @param in the new input string
+     */
     public void start(String in){
         tape = new Tape(in);
         currentState = 0;
@@ -118,6 +126,8 @@ public class TuringMachine {
             accepted = true;
         return transition.getDest();
     }
+    
+    //getters
 
     public ArrayList<TMState> getStates() {
         return states;

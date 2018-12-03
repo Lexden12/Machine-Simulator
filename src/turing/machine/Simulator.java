@@ -25,11 +25,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
- *
+ * Main program file. Gets use input to run the program as desired
  * @author Alex "Lexden" Schendel
  */
 public class Simulator {
     private final static String PATH = System.getProperty("user.dir") + "\\testFiles\\";
+    
+    /**
+     * main method, gets input file for TM, input string(s) and whether to use the GUI or not 
+     */
     public static void main(String[] args) {
         int help = JOptionPane.showConfirmDialog(null, "Welcome to the Turing Machine simulator! Would you like to read the instructions?", "Turing Machine Simulator", JOptionPane.YES_NO_OPTION);
         String file = "";
@@ -95,6 +99,11 @@ public class Simulator {
         }
     }
     
+    /**
+     * if given a path to a file for multiple input strings, parse the file for the strings
+     * @param file path to the file to parse
+     * @return an ArrayList of all the strings
+     */
     public static ArrayList<String> parser(String file){
         if(file.startsWith("test")){
             file = PATH+"input_"+file+".txt";
@@ -113,6 +122,11 @@ public class Simulator {
         return strings;
     }
     
+    /**
+     * noGUI version (quick-run)
+     * @param TM Turing Machine to test
+     * @return true for accept, false for reject.
+     */
     public static boolean noGUI(TuringMachine TM){
         TM.step();
         if(TM.accepted)
@@ -122,6 +136,11 @@ public class Simulator {
         return noGUI(TM);
     }
     
+    /**
+     * noGUI version for multiple input strings
+     * @param TM Turing Machine to use
+     * @param inputs the multiple strings to test
+     */
     public static void noGUI(TuringMachine TM, ArrayList<String> inputs){
         JTextArea text = new JTextArea();
         text.setEditable(false);

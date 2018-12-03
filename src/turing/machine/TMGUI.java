@@ -29,7 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 /**
- *
+ * GUI for the simulator
  * @author Alex "Lexden" Schendel
  */
 public class TMGUI extends JFrame{
@@ -39,18 +39,30 @@ public class TMGUI extends JFrame{
     private JTextArea text;
     private boolean ended;
     
+    /**
+     * constructor given a Turing Machine to draw
+     * @param TM Turing Machine to draw
+     */
     public TMGUI(TuringMachine TM){
         this.TM = TM;
         canvas = new TMCanvas(TM);
         init();
     }
     
+    /**
+     * constructor with Turing Machine to draw and multiple inputs to run
+     * @param TM Turing Machine to draw
+     * @param inputs input strings to run
+     */
     public TMGUI(TuringMachine TM, ArrayList<String> inputs){
         this.TM = TM;
         canvas = new TMCanvas(TM, inputs);
         init();
     }
     
+    /**
+     * initialize the GUI
+     */
     public void init(){
         step = new JButton("Step");
         step.addActionListener(new StepButtonListener());
@@ -65,6 +77,9 @@ public class TMGUI extends JFrame{
         update();
     }
     
+    /**
+     * update the GUI when necessary to keep the proper size and shape
+     */
     public void update(){
         getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

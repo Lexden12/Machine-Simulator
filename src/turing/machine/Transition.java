@@ -18,11 +18,15 @@
 package turing.machine;
 
 /**
- *
+ * transition for a basic state machine
  * @author Alex "Lexden" Schendel
  */
 public class Transition {
     private final char c;
+    /**
+     * constructor with character read
+     * @param c char read
+     */
     public Transition(char c){
         this.c = c;
     }

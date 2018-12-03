@@ -18,7 +18,7 @@
 package turing.machine;
 
 /**
- *
+ * Class to allow the creation of a Doubly Linked List. Implemented in Tape.
  * @author Alex "Lexden" Schendel
  * @param <E> element to be stored in the linked list
  */
@@ -26,10 +26,17 @@ public class DoublyLinkedListElement<E> {
     private E element;
     private DoublyLinkedListElement<E> next, previous;
 
+    /**
+     * constructor of a Doubly Linked List Element
+     * @param element doubly linked list element to store in this object
+     */
     public DoublyLinkedListElement(E element) {
         this.element = element;
     }
 
+    /**
+     * getters and setters
+     */
     public E getElement() {
         return element;
     }

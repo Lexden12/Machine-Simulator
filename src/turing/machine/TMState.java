@@ -20,7 +20,7 @@ package turing.machine;
 import java.util.ArrayList;
 
 /**
- *
+ * a class to store one state of a Turing Machine
  * @author Alex "Lexden" Schendel
  */
 public class TMState {
@@ -28,11 +28,21 @@ public class TMState {
     private ArrayList<TMTransition> transitions;
     int x, y;
     
+    /**
+     * constructor for the new state.
+     * @param name the name of the new state
+     */
     public TMState(String name){
         this.name = name;
         transitions = new ArrayList<>();
     }
     
+    /**
+     * given a character, find out what the next state we should move to is.
+     * @param in the character read
+     * @return the transition we should follow to get to the proper state
+     * returns null if there is no transition on this character
+     */
     public TMTransition nextState(char in){
         for(TMTransition t:transitions){
             if(in == t.getChar()){
@@ -42,10 +52,16 @@ public class TMState {
         return null;
     }
     
+    /**
+     * add a transition to the state
+     * @param transition the transition to add
+     */
     public void addTransition(TMTransition transition){
         transitions.add(transition);
     }
 
+    //getters
+    
     public String getName() {
         return name;
     }
