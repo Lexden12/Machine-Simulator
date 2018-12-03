@@ -1,0 +1,9 @@
+Result:
+aaabbbccccccccc:	Accepted.
+aabbcccc:	Accepted.
+abc:	Accepted.
+aabcccc:	Rejected.
+abcabc:	Rejected.
+ababcccc:	Rejected.
+abbbbcccc:	Accepted.
+aaaabcccc:	Accepted.
